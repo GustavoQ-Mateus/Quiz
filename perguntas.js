@@ -26,14 +26,14 @@ const perguntasGeradas = [
     dificuldade: "Fácil",
     pares: [[1, 2], [2, 3], [3, 4]],
     pergunta: "A relação é reflexiva?",
-    resposta: true,
+    resposta: false,
     explicacao: "Não é reflexiva porque faltam os pares (1,1), (2,2), (3,3) e (4,4). Relação reflexiva requer (a,a) para todo elemento."
   },
   {
     dificuldade: "Fácil",
     pares: [[1, 2], [2, 1], [2, 3]],
     pergunta: "A relação é simétrica?",
-    resposta: true,
+    resposta: false,
     explicacao: "Não é simétrica porque o par (2,3) não tem seu correspondente (3,2). Para ser simétrica, todo par (a,b) deve ter (b,a)."
   },
   {
@@ -47,7 +47,7 @@ const perguntasGeradas = [
     dificuldade: "Fácil",
     pares: [[1, 2], [2, 3], [1, 3]],
     pergunta: "A relação é simétrica?",
-    resposta: true,
+    resposta: false,
     explicacao: "Não é simétrica porque (1,2) não tem (2,1), e (2,3) não tem (3,2). Apenas (1,3) ↔ (3,1) estaria completo."
   },
   {
@@ -68,7 +68,7 @@ const perguntasGeradas = [
     dificuldade: "Fácil",
     pares: [[1, 2], [2, 3]],
     pergunta: "A relação é transitiva?",
-    resposta: true,
+    resposta: false,
     explicacao: "Não é transitiva porque temos (1,2) e (2,3), mas falta (1,3). Transitividade exige que (a,b)+(b,c) implique (a,c)."
   },
 
@@ -84,14 +84,14 @@ const perguntasGeradas = [
     dificuldade: "Normal",
     pares: [[1, 2], [2, 3], [1, 3], [3, 4]],
     pergunta: "A relação é transitiva?",
-    resposta: true,
+    resposta: false,
     explicacao: "Não é transitiva porque temos (2,3) e (3,4), mas falta (2,4). Transitividade exige completar todas as cadeias."
   },
   {
     dificuldade: "Normal",
     pares: [[1, 2], [2, 1], [3, 3]],
     pergunta: "A relação é reflexiva?",
-    resposta: true,
+    resposta: false,
     explicacao: "Não é reflexiva porque se o universo inclui {1,2,3}, faltam (1,1) e (2,2). Apenas (3,3) está presente."
   },
   /// atualização de questão
@@ -99,7 +99,7 @@ const perguntasGeradas = [
     dificuldade: "Normal",
     pares: [[1, 2], [2, 3], [3, 4], [1, 4]],
     pergunta: "A relação é transitiva?",
-    resposta: true,
+    resposta: false,
     explicacao: "Não é transitiva, pois faltam pares como (1,3) e (2,4), que deveriam existir se a relação fosse transitiva (por exemplo, (1,2) e (2,3) → (1,3))."
   },
 ///
@@ -107,21 +107,21 @@ const perguntasGeradas = [
     dificuldade: "Normal",
     pares: [[1, 2], [2, 3], [3, 1]],
     pergunta: "A relação é simétrica?",
-    resposta: true,
+    resposta: false,
     explicacao: "Não é simétrica porque nenhum par tem seu inverso: faltam (2,1), (3,2) e (1,3). Simetria requer todos os inversos."
   },
   {
     dificuldade: "Normal",
     pares: [[1, 2], [2, 1], [3, 4]],
     pergunta: "A relação é simétrica?",
-    resposta: true,
+    resposta: false,
     explicacao: "Não é simétrica porque (3,4) não tem seu correspondente (4,3). Apenas os pares com 1 e 2 são simétricos."
   },
   {
     dificuldade: "Normal",
     pares: [[1, 2], [2, 3], [1, 3]],
     pergunta: "A relação é de equivalência?",
-    resposta: true,
+    resposta: false,
     explicacao: "Não é de equivalência porque: Não é reflexiva (faltam (1,1), (2,2), (3,3)) e não é simétrica (faltam inversos) embora seja transitiva."
   },
   {
@@ -135,7 +135,7 @@ const perguntasGeradas = [
     dificuldade: "Normal",
     pares: [[1, 1], [1, 2], [2, 1]],
     pergunta: "A relação é reflexiva?",
-    resposta: true,
+    resposta: false,
     explicacao: "Não é reflexiva porque se o universo inclui {1,2}, falta (2,2). Apenas (1,1) está presente."
   },
   {
@@ -157,7 +157,7 @@ const perguntasGeradas = [
     dificuldade: "Médio",
     pares: [[1, 2], [2, 3], [3, 4], [4, 5]],
     pergunta: "A relação é transitiva?",
-    resposta: true,
+    resposta: false,
     explicacao: "Não é transitiva porque, por exemplo, (1,2) e (2,3) exigiriam (1,3), que está ausente."
   },
   {
@@ -171,7 +171,7 @@ const perguntasGeradas = [
     dificuldade: "Médio",
     pares: [[1, 1], [2, 2], [3, 3], [4, 4]],
     pergunta: "A relação é de equivalência?",
-    resposta: true,
+    resposta: false,
     explicacao: "Não é de equivalência porque, apesar de reflexiva e simétrica, falta a transitividade — não há pares (a,b) com (b,c) implicando (a,c)."
   },
 /// Atualização de questão
@@ -179,7 +179,7 @@ const perguntasGeradas = [
     dificuldade: "Médio",
     pares: [[1, 2], [2, 3], [3, 1]],
     pergunta: "A relação é transitiva?",
-    resposta: true,
+    resposta: false,
     explicacao: "Não é transitiva, pois a composição (1,2) e (2,3) deveria gerar (1,3), mas esse par não está presente na relação."
   },
 ///
@@ -194,21 +194,21 @@ const perguntasGeradas = [
     dificuldade: "Médio",
     pares: [[1, 2], [2, 3], [1, 3], [3, 1]],
     pergunta: "A relação é de equivalência?",
-    resposta: true,
+    resposta: false,
     explicacao: "Não é de equivalência porque não é reflexiva (faltam (2,2), (3,3)), e nem totalmente simétrica (falta (3,2) para (2,3))."
   },
   {
     dificuldade: "Médio",
     pares: [[1, 2], [2, 1], [3, 3], [2, 3]],
     pergunta: "A relação é simétrica?",
-    resposta: true,
+    resposta: false,
     explicacao: "Não é simétrica porque (2,3) não tem seu par simétrico (3,2). Os demais pares estão corretos."
   },
   {
     dificuldade: "Médio",
     pares: [[1, 1], [2, 2], [1, 2], [2, 1]],
     pergunta: "A relação é reflexiva?",
-    resposta: true,
+    resposta: false,
     explicacao: "Não é reflexiva se considerarmos o universo {1,2,3}, pois falta (3,3). Reflexividade exige (a,a) para todos os elementos."
   },
   {
@@ -245,7 +245,7 @@ const perguntasGeradas = [
     dificuldade: "Difícil",
     pares: [[1, 1], [2, 2], [3, 3], [4, 4], [1, 2]],
     pergunta: "A relação é de equivalência?",
-    resposta: true,
+    resposta: false,
     explicacao: "Não é de equivalência pois não é simétrica (falta (2,1) para (1,2)), nem transitiva (não há composições suficientes)."
   },
   {
@@ -259,7 +259,7 @@ const perguntasGeradas = [
     dificuldade: "Difícil",
     pares: [[1, 2], [2, 3], [3, 4], [1, 4]],
     pergunta: "A relação é reflexiva?",
-    resposta: true,
+    resposta: false,
     explicacao: "Não é reflexiva porque não há nenhum par do tipo (a,a). Reflexividade exige (1,1), (2,2), etc."
   },
   {
@@ -273,7 +273,7 @@ const perguntasGeradas = [
     dificuldade: "Difícil",
     pares: [[1, 2], [2, 3], [3, 1]],
     pergunta: "A relação é de equivalência?",
-    resposta: true,
+    resposta: false,
     explicacao: "Não é de equivalência: falta reflexividade ((1,1), etc.) e simetria ((2,1), etc.); embora seja transitiva por fechamento implícito."
   },
   {
