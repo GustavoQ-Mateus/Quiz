@@ -13,6 +13,11 @@ let explicacaoAtual = "";
 let fimDeJogoAguardando = false;
 let tempoFimDeJogo = 0;
 let particulas = [];
+let score = 0
+let combo = 0
+let maxcombo = 0
+let lastAnswerTime = 0
+let comboTimer = 0
 const numParticulas = 60;
 
 function setup() {
@@ -240,7 +245,7 @@ function drawEndGame() {
     noLoop();
     document.getElementById("btn-reiniciar").style.display = "block";
 }
-
+//Pontuação novo
 function mousePressed() {
     if (!jogoIniciado) {
         jogoIniciado = true;
@@ -262,16 +267,38 @@ function mousePressed() {
         const btnWidth = 120;
         const spacing = 40;
         const startX = width/2 - (2 * btnWidth + spacing)/2;
-        
+        }
         if (mouseInside(startX, 220, btnWidth, 50)) {
             verificarResposta("Sim");
         }
         else if (mouseInside(startX + btnWidth + spacing, 220, btnWidth, 50)) {
             verificarResposta("Não");
         }
-    }
+        let TimeTaken = millis() - lastAnswerTime;
+        lastAnswerTime = millis();
+        
+        //Sistema de buff por tempo
+        let TimeBonus = contrain(map(timeTaken, 1000, 5000, 1, 0), 0, 1);
+        //Resposta correta
+        if (i === correctIndex) {
+            combo++;
+            comboTimer = millis();
+        //Pontuação normal + buff por tempo + combo
+        let baseScore = 100;
+        let comboMultiplier = 1 + (combo * 0.1);//Cada combo = 10%
+        let earned = baseScore * timeBonus * comboMultiplier;
+        score += floor(earned);
+        
+        if (combo> maxcombo) maxcombo = combo;
+        proximaPergunta();
+        }
+        else {
+            combo = 0;
+        }
+        
 }
-
+///
+//Atualização sistemas de Pontuação
 function verificarResposta(respostaDoJogador) {
     clearInterval(timer);
     respostaMostrada = true;
@@ -280,7 +307,7 @@ function verificarResposta(respostaDoJogador) {
                           (respostaDoJogador === "Não" && !perguntaAtual.resposta);
 
     if (respostaCorretaAtual) {
-        pontos += 10;
+        pontos += 100;
         explicacaoAtual = perguntaAtual.explicacao || "Resposta correta!";
     } else {
         vidas--;
@@ -295,7 +322,7 @@ function verificarResposta(respostaDoJogador) {
       tempoFimDeJogo = millis(); // registra o tempo atual
   }
 }
-
+///
 function proximaPergunta() {
     respostaMostrada = false;
     perguntasRespondidas++;
