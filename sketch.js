@@ -278,24 +278,34 @@ function verificarResposta(respostaDoJogador) {
     
     respostaCorretaAtual = (respostaDoJogador === "Sim" && perguntaAtual.resposta) || 
                           (respostaDoJogador === "Não" && !perguntaAtual.resposta);
-
+//atualização sistema de pontuação
     if (respostaCorretaAtual) {
-        pontos += 10;
-        explicacaoAtual = perguntaAtual.explicacao || "Resposta correta!";
+        let base = 100;
+        let tempoDemorado = 10 - tempoRestante;
+        let bonusPercentual = Math.max(0, 10 - tempoDemorado);
+        let bonus = base * (bonusPercentual / 100);
+        let pontosGanho = Math.round(base + bonus);
+        pontos += pontosGanho;
+        explicacaoAtual =
+            `✅ Correto! +${pontosGanho} pontos ` + `⏱ Tempo de resposta: ${tempoDemorado}s` +
+            `⏳ Bônus de tempo: +${Math.round(bonus)} pontos\n\n` + (perguntaAtual.explicacao ?
+                `📘 ${perguntaAtual.explicacao.replace("✅ CORRETO - ", "")}` :
+                "Resposta correta!");   
     } else {
         vidas--;
-        explicacaoAtual = `❌ A resposta correta era: ${perguntaAtual.resposta ? "Sim" : "Não"}\n\n`;
-        explicacaoAtual += perguntaAtual.explicacao ? 
-            perguntaAtual.explicacao.replace("✅ CORRETO - ", "Explicação: ") : 
-            "Esta relação " + (perguntaAtual.resposta ? "possui" : "não possui") + " a propriedade em questão";
+        let tempoDemorado = 10 - tempoRestante;
+        explicacaoAtual =
+        `❌ A resposta correta era: ${perguntaAtual.resposta ? "Sim" : "Não"}\n` + `⏱ Tempo de resposta: ${tempoDemorado}s\n\n` +
+        (perguntaAtual.explicacao ?
+            `📘 ${perguntaAtual.explicacao.replace("✅ CORRETO - ", "")}` :
+            "Esta relação " + (perguntaAtual.resposta ? "possui" : "não possui") + " a propriedade em questão");  
     }
-
     if (vidas <= 0 || perguntasRespondidas >= 7) {
       fimDeJogoAguardando = true;
       tempoFimDeJogo = millis(); // registra o tempo atual
   }
 }
-
+//
 function proximaPergunta() {
     respostaMostrada = false;
     perguntasRespondidas++;
