@@ -94,13 +94,15 @@ const perguntasGeradas = [
     resposta: false,
     explicacao: "Não é reflexiva porque se o universo inclui {1,2,3}, faltam (1,1) e (2,2). Apenas (3,3) está presente."
   },
+  /// atualização de questão
   {
     dificuldade: "Normal",
     pares: [[1, 2], [2, 3], [3, 4], [1, 4]],
     pergunta: "A relação é transitiva?",
-    resposta: true,
-    explicacao: "É transitiva porque todas as cadeias estão completas: (1,2)+(2,3) → (1,3) [implícito por (1,4)]; (1,2)+(2,4) → (1,4) [presente]; (2,3)+(3,4) → (2,4) [implícito]"
+    resposta: false,
+    explicacao: "Não é transitiva, pois faltam pares como (1,3) e (2,4), que deveriam existir se a relação fosse transitiva (por exemplo, (1,2) e (2,3) → (1,3))."
   },
+///
   {
     dificuldade: "Normal",
     pares: [[1, 2], [2, 3], [3, 1]],
@@ -172,13 +174,15 @@ const perguntasGeradas = [
     resposta: false,
     explicacao: "Não é de equivalência porque, apesar de reflexiva e simétrica, falta a transitividade — não há pares (a,b) com (b,c) implicando (a,c)."
   },
+/// Atualização de questão
   {
     dificuldade: "Médio",
     pares: [[1, 2], [2, 3], [3, 1]],
     pergunta: "A relação é transitiva?",
-    resposta: true,
-    explicacao: "É transitiva porque (1,2)+(2,3) → (1,3), (2,3)+(3,1) → (2,1), e (1,2)+(2,1) → (1,1), todos implícitos pela composição."
+    resposta: false,
+    explicacao: "Não é transitiva, pois a composição (1,2) e (2,3) deveria gerar (1,3), mas esse par não está presente na relação."
   },
+///
   {
     dificuldade: "Médio",
     pares: [[1, 1], [2, 2], [3, 3], [1, 2]],
