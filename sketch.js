@@ -279,55 +279,38 @@ function mousePressed() {
         let timeTaken = millis() - lastAnswerTime;
         lastAnswerTime = millis();
   
-        verificarResposta(respostaSelecionada); // Define respostaMostrada e vidas
-  
-        // Verifica se a resposta foi correta
-        if (respostaSelecionada === perguntas[perguntaAtual].resposta) {
-          // Sistema de buff por tempo
-          let timeBonus = constrain(map(timeTaken, 1000, 5000, 1, 0), 0, 1);
-  
-          // Combo
-          combo++;
-          comboTimer = millis();
-  
-          // Pontuação
-          let baseScore = 100;
-          let comboMultiplier = 1 + (combo * 0.1); // Cada combo = +10%
-          let earned = baseScore * timeBonus * comboMultiplier;
-          score += floor(earned);
-  
-          if (combo > maxcombo) maxcombo = combo;
-        } else {
-          combo = 0;
-        }
+        verificarResposta(respostaSelecionada, timeTaken); // Envia tempo junto
       }
     }
   }
 ///
 //Atualização sistemas de Pontuação
-function verificarResposta(respostaDoJogador) {
-    clearInterval(timer);
+function verificarResposta(respostaSelecionada, tempoGasto) {
     respostaMostrada = true;
-    
-    respostaCorretaAtual = (respostaDoJogador === "Sim" && perguntaAtual.resposta) || 
-                          (respostaDoJogador === "Não" && !perguntaAtual.resposta);
-
-    if (respostaCorretaAtual) {
-        pontos += 100;
-        explicacaoAtual = perguntaAtual.explicacao || "Resposta correta!";
+    perguntasRespondidas++;
+  
+    const correta = perguntas[perguntaAtual].resposta;
+  
+    if (respostaSelecionada === correta) {
+      acertos++;
+  
+      //  BUFF POR TEMPO E COMBO
+      let timeBonus = constrain(map(tempoGasto, 1000, 5000, 1, 0), 0, 1);
+      combo++;
+      comboTimer = millis();
+  
+      let baseScore = 100;
+      let comboMultiplier = 1 + (combo * 0.1); // +10% por combo
+      let earned = baseScore * timeBonus * comboMultiplier;
+      score += floor(earned);  
+  
+      if (combo > maxcombo) maxcombo = combo;
+  
     } else {
-        vidas--;
-        explicacaoAtual = `❌ A resposta correta era: ${perguntaAtual.resposta ? "Sim" : "Não"}\n\n`;
-        explicacaoAtual += perguntaAtual.explicacao ? 
-            perguntaAtual.explicacao.replace("✅ CORRETO - ", "Explicação: ") : 
-            "Esta relação " + (perguntaAtual.resposta ? "possui" : "não possui") + " a propriedade em questão";
+      combo = 0;
+      vidas--;
     }
-
-    if (vidas <= 0 || perguntasRespondidas >= 7) {
-      fimDeJogoAguardando = true;
-      tempoFimDeJogo = millis(); // registra o tempo atual
-  } 
-}
+  }
 ///
 function proximaPergunta() {
     respostaMostrada = false;
