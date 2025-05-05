@@ -245,58 +245,64 @@ function drawEndGame() {
     noLoop();
     document.getElementById("btn-reiniciar").style.display = "block";
 }
-//Pontuação novo
+// Pontuação novo
 function mousePressed() {
     if (!jogoIniciado) {
-        jogoIniciado = true;
-        iniciarTimer();
-        return;
+      jogoIniciado = true;
+      iniciarTimer();
+      return;
     }
-
+  
     if (respostaMostrada) {
-        const x = width/2 - 75;
-        const y = 320 + 120 + 20;
-        const w = 150;
-        const h = 45;
-        
-        if (mouseInside(x, y, w, h)) {
-            proximaPergunta();
-        }
-    }
-    else if (vidas > 0 && perguntasRespondidas < 8) {
-        const btnWidth = 120;
-        const spacing = 40;
-        const startX = width/2 - (2 * btnWidth + spacing)/2;
-        }
-        if (mouseInside(startX, 220, btnWidth, 50)) {
-            verificarResposta("Sim");
-        }
-        else if (mouseInside(startX + btnWidth + spacing, 220, btnWidth, 50)) {
-            verificarResposta("Não");
-        }
-        let TimeTaken = millis() - lastAnswerTime;
-        lastAnswerTime = millis();
-        
-        //Sistema de buff por tempo
-        let TimeBonus = contrain(map(timeTaken, 1000, 5000, 1, 0), 0, 1);
-        //Resposta correta
-        if (i === correctIndex) {
-            combo++;
-            comboTimer = millis();
-        //Pontuação normal + buff por tempo + combo
-        let baseScore = 100;
-        let comboMultiplier = 1 + (combo * 0.1);//Cada combo = 10%
-        let earned = baseScore * timeBonus * comboMultiplier;
-        score += floor(earned);
-        
-        if (combo> maxcombo) maxcombo = combo;
+      const x = width / 2 - 75;
+      const y = 320 + 120 + 20;
+      const w = 150;
+      const h = 45;
+  
+      if (mouseInside(x, y, w, h)) {
         proximaPergunta();
+      }
+    } else if (vidas > 0 && perguntasRespondidas < 8) {
+      const btnWidth = 120;
+      const spacing = 40;
+      const startX = width / 2 - (2 * btnWidth + spacing) / 2;
+  
+      let respostaSelecionada = null;
+  
+      if (mouseInside(startX, 220, btnWidth, 50)) {
+        respostaSelecionada = "Sim";
+      } else if (mouseInside(startX + btnWidth + spacing, 220, btnWidth, 50)) {
+        respostaSelecionada = "Não";
+      }
+  
+      if (respostaSelecionada !== null) {
+        let timeTaken = millis() - lastAnswerTime;
+        lastAnswerTime = millis();
+  
+        verificarResposta(respostaSelecionada); // Define respostaMostrada e vidas
+  
+        // Verifica se a resposta foi correta
+        if (respostaSelecionada === perguntas[perguntaAtual].resposta) {
+          // Sistema de buff por tempo
+          let timeBonus = constrain(map(timeTaken, 1000, 5000, 1, 0), 0, 1);
+  
+          // Combo
+          combo++;
+          comboTimer = millis();
+  
+          // Pontuação
+          let baseScore = 100;
+          let comboMultiplier = 1 + (combo * 0.1); // Cada combo = +10%
+          let earned = baseScore * timeBonus * comboMultiplier;
+          score += floor(earned);
+  
+          if (combo > maxcombo) maxcombo = combo;
+        } else {
+          combo = 0;
         }
-        else {
-            combo = 0;
-        }
-        
-}
+      }
+    }
+  }
 ///
 //Atualização sistemas de Pontuação
 function verificarResposta(respostaDoJogador) {
@@ -320,7 +326,7 @@ function verificarResposta(respostaDoJogador) {
     if (vidas <= 0 || perguntasRespondidas >= 7) {
       fimDeJogoAguardando = true;
       tempoFimDeJogo = millis(); // registra o tempo atual
-  }
+  } 
 }
 ///
 function proximaPergunta() {
