@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duelo da Lógica</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto+Mono:wght@400;500&display=swap">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
+    <script src="perguntas.js"></script>
+    <script src="sketch.js" defer></script>
+</head>
+<body>
+    <div id="game-container">
+      <header class="topo-jogo">
+        <h1>DUELO DA LÓGICA</h1>
+        <div class="placar">
+            <div class="caixa-status">
+                <span class="label">PONTOS</span>
+                <span id="pontos-display">0</span>
+            </div>
+            <div class="caixa-status">
+                <span class="label">VIDAS</span>
+                <span id="vidas-display">3</span>
+            </div>
+        </div>
+    </header>
+        <div class="game-content" id="p5-canvas"></div>
+    </div>
+    <button id="btn-reiniciar" onclick="reiniciarJogo()">Jogar Novamente</button>
+</body>
+</html>

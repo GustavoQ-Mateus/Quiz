@@ -1,0 +1,208 @@
+:root {
+  --primary: #4361ee;
+  --secondary: #3a0ca3;
+  --accent: #f72585;
+  --light: #f8f9fa;
+  --dark: #212529;
+  --success: #4cc9f0;
+  --warning: #f8961e;
+  --danger: #ef233c;
+  --border-radius: 10px;
+  --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+#p5-canvas canvas {
+  border-radius: 12px;
+  box-shadow: var(--box-shadow);
+  background: white;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  color: var(--dark);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+#game-container {
+  width: 100%;
+  max-width: 800px;
+  position: absolute;
+}
+
+.status-bar {
+  background: white;
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: var(--box-shadow);
+  margin-bottom: -5px;
+  z-index: 2;
+  position: relative;
+}
+
+.game-content {
+  background: white;
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+  padding: 20px;
+  box-shadow: var(--box-shadow);
+  position: relative;
+  z-index: 1;
+  min-height: 600px;
+}
+
+.status-item {
+  text-align: center;
+  flex: 1;
+}
+
+.status-label {
+  font-size: 14px;
+  color: #6c757d;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.status-value {
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--primary);
+  font-family: 'Roboto Mono', monospace;
+}
+
+#btn-reiniciar {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  box-shadow: 0 4px 15px rgba(247, 37, 133, 0.4);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: none;
+  z-index: 10;
+}
+
+#btn-reiniciar:hover {
+  background: #4361ee;
+  transform: translateX(-50%) translateY(-2px);
+  box-shadow: 0 6px 20px rgba(247, 37, 133, 0.5);
+}
+
+.explicacao {
+  background-color: #f8f9fa;
+  border-left: 4px solid #4361ee;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 0 8px 8px 0;
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-line;
+}
+
+.explicacao-correta {
+  border-left-color: #27ae60;
+}
+
+.explicacao-errada {
+  border-left-color: #e74c3c;
+}
+
+.dificuldade-facil { color: var(--success); }
+.dificuldade-normal { color: var(--warning); }
+.dificuldade-medio { color: #f3722c; }
+.dificuldade-dificil { color: var(--danger); }
+
+@media (max-width: 600px) {
+  .status-bar {
+      flex-direction: column;
+      gap: 10px;
+      padding: 10px;
+  }
+  
+  .status-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  }
+  
+  .status-label {
+      margin-bottom: 0;
+      font-size: 12px;
+  }
+  
+  .status-value {
+      font-size: 16px;
+  }
+  
+  .explicacao {
+      padding: 10px;
+      font-size: 13px;
+  }
+}
+
+.topo-jogo {
+  background: linear-gradient(90deg, #3a0ca3, #4361ee);
+  color: white;
+  border-radius: 15px;
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 20px;
+  box-shadow: var(--box-shadow);
+}
+
+.topo-jogo h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.placar {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.caixa-status {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-family: 'Roboto Mono', monospace;
+}
+
+.caixa-status .label {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: #d0d0ff;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.caixa-status span {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.status-bar {
+  display: none;
+}
