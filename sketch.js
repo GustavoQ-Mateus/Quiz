@@ -283,9 +283,7 @@ function mousePressed() {
       }
     }
   }
-///
-//Atualização sistemas de Pontuação
-function verificarResposta(respostaSelecionada, tempoGasto) {
+  function verificarResposta(respostaSelecionada, tempoGasto) {
     respostaMostrada = true;
     perguntasRespondidas++;
   
@@ -294,7 +292,7 @@ function verificarResposta(respostaSelecionada, tempoGasto) {
     if (respostaSelecionada === correta) {
       acertos++;
   
-      //  BUFF POR TEMPO E COMBO
+      // tempo e combo 
       let timeBonus = constrain(map(tempoGasto, 1000, 5000, 1, 0), 0, 1);
       combo++;
       comboTimer = millis();
@@ -302,7 +300,7 @@ function verificarResposta(respostaSelecionada, tempoGasto) {
       let baseScore = 100;
       let comboMultiplier = 1 + (combo * 0.1); // +10% por combo
       let earned = baseScore * timeBonus * comboMultiplier;
-      score += floor(earned);  
+      score += floor(earned);
   
       if (combo > maxcombo) maxcombo = combo;
   
@@ -311,6 +309,7 @@ function verificarResposta(respostaSelecionada, tempoGasto) {
       vidas--;
     }
   }
+  
 ///
 function proximaPergunta() {
     respostaMostrada = false;
