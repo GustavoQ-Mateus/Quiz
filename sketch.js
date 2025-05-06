@@ -13,6 +13,7 @@ let explicacaoAtual = "";
 let fimDeJogoAguardando = false;
 let tempoFimDeJogo = 0;
 let particulas = [];
+let pontosGanhoUltimaResposta = 0;
 const numParticulas = 60;
 
 function setup() {
@@ -117,8 +118,8 @@ function draw() {
     textStyle(BOLD);
     text("Pares da relação:", width/2, 70);
     
-    fill(73, 80, 87);
-    textSize(14);
+    fill(5, 33, 166);
+    textSize(19);
     textStyle(NORMAL);
     text(perguntaAtual.pares.map(p => `(${p[0]},${p[1]})`).join(", "), width/2, 100);
 
@@ -176,7 +177,7 @@ function draw() {
     }
 
     // Fim de jogo
-    if ((vidas <= 0 || perguntasRespondidas >= 8) && fimDeJogoAguardando) {
+    if ((vidas <= 0 || perguntasRespondidas >= 16) && fimDeJogoAguardando) {
       if (millis() - tempoFimDeJogo > 2000) { // espera 2 segundos
           drawEndGame();
       }
@@ -230,16 +231,20 @@ function drawEndGame() {
     textSize(20);
     text(`Pontuação Final: ${pontos}`, width/2, height/2 - 30);
     
-    const recorde = parseInt(localStorage.getItem("recorde")) || 0;
-    text(`Recorde: ${recorde}`, width/2, height/2 + 10);
-    
-    if (pontos >= recorde && pontos > 0) {
-        fill(76, 201, 240);
-        text("NOVO RECORDE!", width/2, height/2 + 50);
-    }
+    let recorde = parseInt(localStorage.getItem("recorde")) || 0;
+
+    if (pontos > recorde) {
+    recorde = pontos;
+    localStorage.setItem("recorde", recorde); // <-- salva o novo recorde
+    fill(76, 201, 240);
+    text("NOVO RECORDE!", width/2, height/2 + 50);
+}
+
+text(`Recorde: ${recorde}`, width/2, height/2 + 10);
     
     noLoop();
     document.getElementById("btn-reiniciar").style.display = "block";
+    document.getElementById("btn-menu").style.display = "block";
 }
 
 function mousePressed() {
@@ -259,7 +264,7 @@ function mousePressed() {
             proximaPergunta();
         }
     }
-    else if (vidas > 0 && perguntasRespondidas < 8) {
+    else if (vidas > 0 && perguntasRespondidas < 16) {
         const btnWidth = 120;
         const spacing = 40;
         const startX = width/2 - (2 * btnWidth + spacing)/2;
@@ -281,17 +286,18 @@ function verificarResposta(respostaDoJogador) {
                           (respostaDoJogador === "Não" && !perguntaAtual.resposta);
 //atualização sistema de pontuação
 if (respostaCorretaAtual) {
-let base = 100;
-let tempoDemorado = 10 - tempoRestante;
-let bonusPercentual = Math.max(0, 10 - tempoDemorado);
-let bonus = base * (bonusPercentual / 100);
-let pontosGanho = Math.round(base + bonus);
+    let base = 200;
+    let tempoDemorado = 10 - tempoRestante;
+    let bonusPercentual = Math.max(0, 10 - tempoDemorado);
+    let bonus = base * (bonusPercentual / 100);
+    let pontosGanho = Math.round(base + bonus);
     pontos += pontosGanho;
     pontosGanhoUltimaResposta = pontosGanho; // <-- aqui
     explicacaoAtual =
         `✅ Correto! +${pontosGanho} pontos ` + `⏱ Tempo de resposta: ${tempoDemorado}s` +
         `⏳ Bônus de tempo: +${Math.round(bonus)} pontos\n\n` + (perguntaAtual.explicacao ?
-            `📘 ${perguntaAtual.explicacao.replace("✅ CORRETO - ", "")}` : "Resposta correta!");
+            `📘 ${perguntaAtual.explicacao.replace("✅ CORRETO - ", "")}` :
+            "Resposta correta!");
 } 
 else {
 vidas--;
@@ -302,7 +308,7 @@ vidas--;
         `📘 ${perguntaAtual.explicacao.replace("✅ CORRETO - ", "")}` :
         "Esta relação " + (perguntaAtual.resposta ? "possui" : "não possui") + " a propriedade em questão");  
 }
-if (vidas <= 0 || perguntasRespondidas >= 7) {
+if (vidas <= 0 || perguntasRespondidas >= 15) {
     fimDeJogoAguardando = true;
     tempoFimDeJogo = millis(); // registra o tempo atual
 }
@@ -312,7 +318,7 @@ function proximaPergunta() {
     respostaMostrada = false;
     perguntasRespondidas++;
     
-    if (perguntasRespondidas < 8 && vidas > 0) {
+    if (perguntasRespondidas < 16 && vidas > 0) {
         perguntaAtual = perguntasSelecionadas[perguntasRespondidas];
         iniciarTimer();
     }
@@ -335,7 +341,7 @@ function iniciarTimer() {
 
 function gerarPartida() {
     perguntasSelecionadas = [];
-    let porNivel = 2;
+    let porNivel = 4;
     let niveis = ["Fácil", "Normal", "Médio", "Difícil"];
     for (let nivel of niveis) {
         let perguntasNivel = perguntas.filter(p => p.dificuldade === nivel);
@@ -367,4 +373,17 @@ function reiniciarJogo() {
     loop();
     iniciarTimer();
     document.getElementById("btn-reiniciar").style.display = "none";
+    document.getElementById("btn-menu").style.display = "none";
+}
+function reiniciarmenu() {
+    pontos = 0;
+    vidas = 3;
+    perguntasRespondidas = 0;
+    respostaMostrada = false;
+    jogoIniciado = false;
+    gerarPartida();
+    loop();
+    iniciarTimer();
+    document.getElementById("btn-reiniciar").style.display = "none";
+    document.getElementById("btn-menu").style.display = "none";
 }
