@@ -158,8 +158,9 @@ function draw() {
     if (respostaMostrada) {
         fill(respostaCorretaAtual ? "#27ae60" : "#e74c3c");
         textSize(24);
-        text(respostaCorretaAtual ? "✓ Correto! +10 pontos" : "✗ Errado! -1 vida", width/2, 290);
-        
+        text(respostaCorretaAtual 
+              ? `✓ Correto! +${pontosGanhoUltimaResposta} pontos`
+              : "✗ Errado! -1 vida", width/2, 290);
         // Caixa de explicação
         fill(245, 245, 245);
         stroke(200);
@@ -279,31 +280,32 @@ function verificarResposta(respostaDoJogador) {
     respostaCorretaAtual = (respostaDoJogador === "Sim" && perguntaAtual.resposta) || 
                           (respostaDoJogador === "Não" && !perguntaAtual.resposta);
 //atualização sistema de pontuação
-    if (respostaCorretaAtual) {
-        let base = 100;
-        let tempoDemorado = 10 - tempoRestante;
-        let bonusPercentual = Math.max(0, 10 - tempoDemorado);
-        let bonus = base * (bonusPercentual / 100);
-        let pontosGanho = Math.round(base + bonus);
-        pontos += pontosGanho;
-        explicacaoAtual =
-            `✅ Correto! +${pontosGanho} pontos ` + `⏱ Tempo de resposta: ${tempoDemorado}s` +
-            `⏳ Bônus de tempo: +${Math.round(bonus)} pontos\n\n` + (perguntaAtual.explicacao ?
-                `📘 ${perguntaAtual.explicacao.replace("✅ CORRETO - ", "")}` :
-                "Resposta correta!");   
-    } else {
-        vidas--;
-        let tempoDemorado = 10 - tempoRestante;
-        explicacaoAtual =
-        `❌ A resposta correta era: ${perguntaAtual.resposta ? "Sim" : "Não"}\n` + `⏱ Tempo de resposta: ${tempoDemorado}s\n\n` +
-        (perguntaAtual.explicacao ?
-            `📘 ${perguntaAtual.explicacao.replace("✅ CORRETO - ", "")}` :
-            "Esta relação " + (perguntaAtual.resposta ? "possui" : "não possui") + " a propriedade em questão");  
-    }
-    if (vidas <= 0 || perguntasRespondidas >= 7) {
-      fimDeJogoAguardando = true;
-      tempoFimDeJogo = millis(); // registra o tempo atual
-  }
+if (respostaCorretaAtual) {
+let base = 100;
+let tempoDemorado = 10 - tempoRestante;
+let bonusPercentual = Math.max(0, 10 - tempoDemorado);
+let bonus = base * (bonusPercentual / 100);
+let pontosGanho = Math.round(base + bonus);
+    pontos += pontosGanho;
+    pontosGanhoUltimaResposta = pontosGanho; // <-- aqui
+    explicacaoAtual =
+        `✅ Correto! +${pontosGanho} pontos ` + `⏱ Tempo de resposta: ${tempoDemorado}s` +
+        `⏳ Bônus de tempo: +${Math.round(bonus)} pontos\n\n` + (perguntaAtual.explicacao ?
+            `📘 ${perguntaAtual.explicacao.replace("✅ CORRETO - ", "")}` : "Resposta correta!");
+} 
+else {
+vidas--;
+    let tempoDemorado = 10 - tempoRestante;
+    explicacaoAtual =
+    `❌ A resposta correta era: ${perguntaAtual.resposta ? "Sim" : "Não"}\n` + `⏱ Tempo de resposta: ${tempoDemorado}s\n\n` +
+    (perguntaAtual.explicacao ?
+        `📘 ${perguntaAtual.explicacao.replace("✅ CORRETO - ", "")}` :
+        "Esta relação " + (perguntaAtual.resposta ? "possui" : "não possui") + " a propriedade em questão");  
+}
+if (vidas <= 0 || perguntasRespondidas >= 7) {
+    fimDeJogoAguardando = true;
+    tempoFimDeJogo = millis(); // registra o tempo atual
+}
 }
 //
 function proximaPergunta() {
