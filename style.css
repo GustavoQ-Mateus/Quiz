@@ -15,9 +15,6 @@
   border-radius: 12px;
   box-shadow: var(--box-shadow);
   background: white;
-  width: 100%;
-  height: auto;
-  max-width: 100%;
 }
 
 * {
@@ -39,9 +36,10 @@ body {
 }
 
 #game-container {
-  width: 100%;
-  max-width: 700px;
+  width: 80%;
   margin-top: 2em;
+  max-width: 700px;
+  max-width: 700px;
   position: relative;
 }
 
@@ -55,8 +53,6 @@ body {
   margin-bottom: -5px;
   z-index: 2;
   position: relative;
-  flex-wrap: wrap;
-  gap: 10px;
 }
 
 .game-content {
@@ -66,12 +62,12 @@ body {
   box-shadow: var(--box-shadow);
   position: relative;
   z-index: 1;
-  min-height: 500px;
+  min-height: 600px;
 }
 
 .status-item {
   text-align: center;
-  flex: 1 1 120px;
+  flex: 1;
 }
 
 .status-label {
@@ -90,9 +86,10 @@ body {
 }
 
 #btn-reiniciar {
-  position: relative;
-  margin: 20px auto 0;
-  display: block;
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
   padding: 12px 30px;
   font-size: 1rem;
   font-weight: 600;
@@ -105,12 +102,23 @@ body {
   transition: all 0.3s ease;
   display: none;
   z-index: 10;
+  max-width: 90%;
+  width: fit-content;
+  white-space: nowrap;
 }
 
 #btn-reiniciar:hover {
   background: #4361ee;
-  transform: translateY(-2px);
+  transform: translateX(-50%) translateY(-2px);
   box-shadow: 0 6px 20px rgba(247, 37, 133, 0.5);
+}
+
+@media (max-width: 500px) {
+  #btn-reiniciar {
+    font-size: 0.9rem;
+    padding: 10px 24px;
+    bottom: 20px;
+  }
 }
 
 .explicacao {
@@ -137,6 +145,34 @@ body {
 .dificuldade-medio { color: #f3722c; }
 .dificuldade-dificil { color: var(--danger); }
 
+@media (max-width: 600px) {
+  .status-bar {
+      flex-direction: column;
+      gap: 10px;
+      padding: 10px;
+  }
+  
+  .status-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  }
+  
+  .status-label {
+      margin-bottom: 0;
+      font-size: 12px;
+  }
+  
+  .status-value {
+      font-size: 16px;
+  }
+  
+  .explicacao {
+      padding: 10px;
+      font-size: 13px;
+  }
+}
+
 .topo-jogo {
   background: linear-gradient(90deg, #3a0ca3, #4361ee);
   color: white;
@@ -157,7 +193,6 @@ body {
   display: flex;
   justify-content: center;
   gap: 20px;
-  flex-wrap: wrap;
 }
 
 .caixa-status {
@@ -165,7 +200,6 @@ body {
   padding: 10px 20px;
   border-radius: 12px;
   font-family: 'Roboto Mono', monospace;
-  text-align: center;
 }
 
 .caixa-status .label {
@@ -183,51 +217,5 @@ body {
 }
 
 .status-bar {
-  display: flex;
-}
-
-@media (max-width: 900px) {
-  .status-bar {
-    flex-direction: column;
-    padding: 10px;
-  }
-
-  .status-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .status-label {
-    font-size: 12px;
-    margin-bottom: 0;
-  }
-
-  .status-value {
-    font-size: 16px;
-  }
-
-  .explicacao {
-    padding: 10px;
-    font-size: 13px;
-  }
-
-  .topo-jogo h1 {
-    font-size: 22px;
-  }
-
-  .placar {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  #btn-reiniciar {
-    font-size: 0.9rem;
-    padding: 10px 20px;
-  }
-
-  .game-content {
-    padding: 15px;
-    min-height: 400px;
-  }
+  display: none;
 }
